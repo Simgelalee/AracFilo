@@ -1,0 +1,42 @@
+﻿@model Arac
+
+<form method="post">
+    <div class="border p-3 mt-5">
+        <div class="row pb-3">
+            <h2 class "text-primary">Arac Ekle</h2>
+            </hr>
+        </div>
+        <div class="text text-danger" asp-validation-summary="ModelOnly"></div>
+
+        <div class="mb-3">
+            <label asp-for="AracName" class="p-0"></label>
+            <input asp-for="AracName" placeholder="Araç adını giriniz" class="form-control" />
+           
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Plaka" class="p-0"></label>
+            <input asp-for="Plaka" placeholder="Plaka adını giriniz" class="form-control" />
+            
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Ozellik" class="p-0"></label>
+            <input asp-for="Ozellik" placeholder="Arac özelliklerini giriniz" class="form-control" />
+            
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Vito" class="p-0"></label>
+            <input asp-for="Vito" placeholder="Araç vitesini giriniz" class="form-control" />
+           
+        </div>
+       
+      
+
+        <button type="submit" class="btn btn-lg btn-primary" style="width:250px">Arac Ekle</button>
+        <a asp-controller="Car" asp-action="Index" class-"btn btn-Ig btn-primary" style="width:250px">
+            Araclara Geri Dön
+        </a>
+    </div>
+</form>

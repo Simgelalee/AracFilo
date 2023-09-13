@@ -1,0 +1,90 @@
+﻿@model List<Arac>
+@if (TempData["basarili"] != null)
+{
+	<h2 style="color:red">@TempData ["basarili"]</h2>
+}
+  <div class="container">
+	   <div class="row pt-3 pb-4"
+	        <div>
+	           <h1>Araclar</h1>
+	        </div>
+	   </div>
+	<table class="table table-bordered">
+	 <thead>
+	   <tr> 
+		   <th>
+	                 Id
+	       </th>
+	       <th>
+			        AracName
+	       </th>
+
+			<th>
+					Plaka
+			</th>
+
+			<th>
+					Ozellik
+			</th>
+
+			<th>
+					Vito
+			</th>
+
+	</tr>
+
+ </thead>
+ <tbody>
+			@foreach(var arac in Model)
+			{
+				<tr>
+	                <td>@arac.AracId</td>
+					<td>@arac.AracName</td>
+					<td>@arac.Plaka</td>
+					<td>@arac.Ozellik</td>
+					<td>@arac.Vito</td>
+					<td>
+					   <a asp-controller="Car" asp-action="Guncelle" asp-route-id="@arac.AracId" type="button" class="btn btn-success" style="width:150px">Güncelle</a>
+				    </td>
+
+					<td>
+						<a asp-controller="Car" asp-action="Sil" asp-route-id="@arac.AracId" type="button" class="btn btn-danger" style="width:150px">Sil</a>
+					</td>
+					<td>
+						<a asp-controller="Rent" asp-action="RentAdd" asp-route-id="@arac.AracId" type="button" class="btn btn-info" style="width:150px">Rezerve et</a>
+					</td>
+	           </tr>
+			}
+ </tbody>
+</table>
+   
+	  
+ <div class="row pt-3 pb-2">
+         <div> 
+			 <a asp-controller= "Car" asp-action= "CarAdd" class="btn btn-lg btn-primary" type-"button">
+                 Yeni Araba Oluştur
+			</a>
+         </div>
+ </div>
+
+
+
+
+
+				
+
+
+
+
+			
+
+
+
+
+
+
+
+
+</tbody>
+
+

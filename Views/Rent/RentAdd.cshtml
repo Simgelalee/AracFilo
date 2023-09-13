@@ -1,0 +1,56 @@
+﻿@model Rent
+
+<form method="post">
+    <div class="border p-3 mt-5">
+        <div class="row pb-3">
+            <h2 class "text-primary">Yeni Kiralama Kaydı Ekle</h2>
+            </hr>
+        </div>
+        <div class="text text-danger" asp-validation-summary="ModelOnly"></div>
+
+
+            <div class="mb-3">
+            <label asp-for="AracId" class="p-0"></label>
+            <input asp-for="AracId" class="form-control" disabled value="@Model.AracId" />
+            
+            <span asp-validation-for="AracId" class="text-danger"></span>
+
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CreatedDate" class="p-0"></label>
+            <input asp-for="CreatedDate" class="form-control"  />
+
+        </div>
+        <div class="mb-3">
+            <label asp-for="EndDate" class="p-0"></label>
+            <input asp-for="EndDate" class="form-control" />
+
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Carplate" class="p-0"></label>
+            <input asp-for="Carplate" class="form-control" value="@Model.Carplate" />
+
+        </div>
+        <div class="mb-3">
+            <label asp-for="Destination" class="p-0"></label>
+            <input asp-for="Destination" class="form-control" />
+
+        </div>
+        <div class="mb-3">
+            <label asp-for="Durum" class="p-0"></label>
+            <input asp-for="Durum" class="form-control" />
+
+        </div>
+
+       
+
+       
+
+        <button type="submit" class="btn btn-lg btn-primary" style="width:250px">Kiralama Kaydı Ekle</button>
+        <a asp-controller="Rent" asp-action="Index" class-"btn btn-Ig btn-primary" style="width:250px">
+            Kiralama Listesine Geri Dön
+        </a>
+    </div>
+</form>
