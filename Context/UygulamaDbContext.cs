@@ -10,7 +10,6 @@ namespace AracFilo.Models.utility
       //  public DbSet<CarVito> CarVitos { get; set; }
         public DbSet<Arac> Araclar { get; set; }
 		public DbSet<Rent> Rents{ get; set; }
-		public DbSet<User> Mahmut { get; set; }
 
 	}
 }

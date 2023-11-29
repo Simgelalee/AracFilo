@@ -23,30 +23,37 @@ namespace AracFilo.Controllers
 		{
 
 			List<Arac> Araclar = _db.Araclar.ToList();
-			List<SelectListItem> selectListItems=Araclar.Select(x=> new SelectListItem(x.Plaka,x.AracId.ToString())).ToList();
+			List<SelectListItem> selectListItems = Araclar.Select(x => new SelectListItem(x.Plaka, x.AracId.ToString())).ToList();
 			ViewData["Araclar"] = selectListItems;
 		}
 		[HttpGet]
 		public IActionResult RentAdd(int? id)
+
+
 		{
+			var arac = _db.Araclar.Find(id);
+
+			var rented = new Rent();
+			rented.AracId = arac.AracId;
+			rented.Carplate = arac.Plaka;
+
+
 			_db.Rents.Add(new Rent());
 			List<SelectListItem> valueRent = (from x in _db.Araclar.Where(x => x.Status == true).ToList()
-			                                  select new SelectListItem
-											  { Text= $"{x.Plaka}-{x.Vito}",
-											    Value=x.AracId.ToString()
+											  select new SelectListItem
+											  {
+												  Text = $"{x.Plaka}-{x.Vito}",
+												  Value = x.AracId.ToString()
 											  }).ToList();
 			ViewBag.Rent = valueRent;
-			var arac = _db.Araclar.Find(id);
-			
+
 
 
 			if (arac == null)
 			{
 				return NotFound();
 			}
-			var rented = new Rent();
-			rented.AracId = arac.AracId;
-			rented.Carplate = arac.Plaka;
+
 			return View(rented);
 		}
 
@@ -58,25 +65,35 @@ namespace AracFilo.Controllers
 		[HttpPost]
 		public IActionResult RentAdd(Rent rent)
 		{
-			
-			var userDetail = HttpContext.User.Identity.Name;
-			var user = _db.Users.Where(x => x.Email == userDetail).FirstOrDefault();
-			
-			//var Status=_db.Rents.Where(x => x.CreatedDate<rent.CreatedDate && x.CreatedDate<rent.EndDate && x.EndDate < rent.CreatedDate && x.EndDate < rent.EndDate).ToList()
-			User user1 = new User();
-			user1.UserEmail = user.Email;
-			user1.UserName = user.UserName;
-			
-			
-			_db.Rents.Add(rent);
-			_db.Mahmut.Add(user1);
-			_db.SaveChanges();
-			return RedirectToAction("Index");
+			var rento = _db.Rents.Where(x => x.AracId == rent.AracId).FirstOrDefault();
+
+			if (rento == null)
+			{
+				var userDetail = HttpContext.User.Identity.Name;
+				var user = _db.Users.Where(x => x.Email == userDetail).FirstOrDefault();
+
+				rent.UserId = user.Email;
+				rent.ResimUrl = " ";
+				_db.Rents.Add(rent);
+
+				_db.SaveChanges();
+				return RedirectToAction("Index");
+
+			}
+			ModelState.AddModelError(string.Empty, "Bu araç dolu");
+			return View(rent);
 		}
 		[HttpGet]
 		public IActionResult Index()
 		{
 			var rents = _db.Rents.ToList();
+			foreach (var item in rents)
+			{
+				var deneme = _db.Araclar.Find(item.AracId);
+				ViewData[$"{item.AracId}"] = deneme.AracName;
+			}
+
+
 
 			return View(rents);
 		}
@@ -123,22 +140,40 @@ namespace AracFilo.Controllers
 			return View(rent);
 		}
 		[HttpPost]
-		public IActionResult Guncelle(Rent rent)
+		public IActionResult Guncelle(int id, Rent rent)
 		{
-			if (rent.AracId == null || rent.Carplate == null)
+			if (rent.AracId == null || rent.UserId == null || rent.Carplate == null)
 			{
+
 				ModelState.AddModelError(string.Empty, "Boş geçilemez");
 				return View(rent);
 			}
-			
-				_db.Rents.Update(rent);
-				_db.SaveChanges();
+			var userDetail = HttpContext.User.Identity.Name;
+			var user = _db.Users.Where(x => x.Email == userDetail).FirstOrDefault();
 
-				return RedirectToAction("Index");
-			
+			var rentData = _db.Rents.FirstOrDefault(f => f.RentId == id);
+
+			rentData.UserId = user.Email;
+			rentData.Status = rent.Status;
+			rentData.ResimUrl = " ";
+
+			_db.Rents.Update(rentData);
+			_db.SaveChanges();
+
+			return RedirectToAction("Index", "Rent");
+
 
 		}
 
+
 	}
 
+
+	//public bool IsReserveCar()
+	//{
+
+	//}
+
 }
+
+

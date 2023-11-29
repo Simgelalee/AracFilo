@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AracFilo.Migrations
 {
     [DbContext(typeof(UygulamaDbContext))]
-    [Migration("20230913121009_dEEdfdfklkkjdfGHGHgjhjjhhj")]
-    partial class dEEdfdfklkkjdfGHGHgjhjjhhj
+    [Migration("20230914132245_New")]
+    partial class New
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,7 +86,15 @@ namespace AracFilo.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ResimUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RentId");
@@ -94,37 +102,6 @@ namespace AracFilo.Migrations
                     b.HasIndex("AracId");
 
                     b.ToTable("Rents");
-                });
-
-            modelBuilder.Entity("AracFilo.Models.User", b =>
-                {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
-
-                    b.Property<int>("AracId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId");
-
-                    b.HasIndex("AracId");
-
-                    b.HasIndex("RentId");
-
-                    b.ToTable("Mahmut");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -336,25 +313,6 @@ namespace AracFilo.Migrations
                     b.Navigation("Arac");
                 });
 
-            modelBuilder.Entity("AracFilo.Models.User", b =>
-                {
-                    b.HasOne("AracFilo.Models.Arac", "aracs")
-                        .WithMany("Users")
-                        .HasForeignKey("AracId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AracFilo.Models.Rent", "rents")
-                        .WithMany("Users")
-                        .HasForeignKey("RentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("aracs");
-
-                    b.Navigation("rents");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -409,13 +367,6 @@ namespace AracFilo.Migrations
             modelBuilder.Entity("AracFilo.Models.Arac", b =>
                 {
                     b.Navigation("Rents");
-
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("AracFilo.Models.Rent", b =>
-                {
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

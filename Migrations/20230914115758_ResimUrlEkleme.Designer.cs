@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AracFilo.Migrations
 {
     [DbContext(typeof(UygulamaDbContext))]
-    [Migration("20230913123321_dEEdfdfklkkjdfGHGHgjhjjhhjklklkljkj")]
-    partial class dEEdfdfklkkjdfGHGHgjhjjhhjklklkljkj
+    [Migration("20230914115758_ResimUrlEkleme")]
+    partial class ResimUrlEkleme
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,19 +45,18 @@ namespace AracFilo.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ResimUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Vito")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AracId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Araclar");
                 });
@@ -91,37 +90,15 @@ namespace AracFilo.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RentId");
 
                     b.HasIndex("AracId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Rents");
-                });
-
-            modelBuilder.Entity("AracFilo.Models.User", b =>
-                {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
-
-                    b.Property<string>("UserEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("Mahmut");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -322,34 +299,15 @@ namespace AracFilo.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AracFilo.Models.Arac", b =>
-                {
-                    b.HasOne("AracFilo.Models.User", "Users")
-                        .WithMany("Aracs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Users");
-                });
-
             modelBuilder.Entity("AracFilo.Models.Rent", b =>
                 {
-                    b.HasOne("AracFilo.Models.Arac", "Aracss")
+                    b.HasOne("AracFilo.Models.Arac", "Arac")
                         .WithMany("Rents")
                         .HasForeignKey("AracId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AracFilo.Models.User", "Users")
-                        .WithMany("rents")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Aracss");
-
-                    b.Navigation("Users");
+                    b.Navigation("Arac");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -406,13 +364,6 @@ namespace AracFilo.Migrations
             modelBuilder.Entity("AracFilo.Models.Arac", b =>
                 {
                     b.Navigation("Rents");
-                });
-
-            modelBuilder.Entity("AracFilo.Models.User", b =>
-                {
-                    b.Navigation("Aracs");
-
-                    b.Navigation("rents");
                 });
 #pragma warning restore 612, 618
         }

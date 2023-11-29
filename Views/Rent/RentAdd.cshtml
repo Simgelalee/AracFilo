@@ -1,6 +1,6 @@
 ﻿@model Rent
 
-<form method="post">
+<form method="post" >
     <div class="border p-3 mt-5">
         <div class="row pb-3">
             <h2 class "text-primary">Yeni Kiralama Kaydı Ekle</h2>
@@ -11,7 +11,7 @@
 
             <div class="mb-3">
             <label asp-for="AracId" class="p-0"></label>
-            <input asp-for="AracId" class="form-control" disabled value="@Model.AracId" />
+            <input asp-for="AracId" class="form-control" hidden  value="@Model.AracId" />
             
             <span asp-validation-for="AracId" class="text-danger"></span>
 

@@ -1,4 +1,5 @@
-﻿@model List<Arac>
+﻿@using AracFilo.Context;
+@model List<Arac>
 @if (TempData["basarili"] != null)
 {
 	<h2 style="color:red">@TempData ["basarili"]</h2>
@@ -43,31 +44,35 @@
 					<td>@arac.Plaka</td>
 					<td>@arac.Ozellik</td>
 					<td>@arac.Vito</td>
-					<td>
-					   <a asp-controller="Car" asp-action="Guncelle" asp-route-id="@arac.AracId" type="button" class="btn btn-success" style="width:150px">Güncelle</a>
-				    </td>
 
-					<td>
-						<a asp-controller="Car" asp-action="Sil" asp-route-id="@arac.AracId" type="button" class="btn btn-danger" style="width:150px">Sil</a>
-					</td>
-					<td>
-						<a asp-controller="Rent" asp-action="RentAdd" asp-route-id="@arac.AracId" type="button" class="btn btn-info" style="width:150px">Rezerve et</a>
-					</td>
-	           </tr>
+					@if (User.IsInRole(UserRoles.Role_Admin))
+					{
+						<td>
+							<a asp-controller="Car" asp-action="Guncelle" asp-route-id="@arac.AracId" type="button" class="btn btn-success" style="width:150px">Güncelle</a>
+						</td>
+
+						<td>
+							<a asp-controller="Car" asp-action="Sil" asp-route-id="@arac.AracId" type="button" class="btn btn-danger" style="width:150px">Sil</a>
+						</td>
+						<td>
+							<a asp-controller="Rent" asp-action="RentAdd" asp-route-id="@arac.AracId" type="button" class="btn btn-info" style="width:150px">Rezerve et</a>
+						</td>
+					}
+				</tr>
 			}
  </tbody>
 </table>
    
-	  
- <div class="row pt-3 pb-2">
+	 @if (User.IsInRole(UserRoles.Role_Admin)) {  
+	<div class="row pt-3 pb-2">
          <div> 
 			 <a asp-controller= "Car" asp-action= "CarAdd" class="btn btn-lg btn-primary" type-"button">
                  Yeni Araba Oluştur
 			</a>
          </div>
- </div>
+	</div>
 
-
+	 }
 
 
 

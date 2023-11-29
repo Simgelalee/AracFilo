@@ -1,64 +1,55 @@
 ﻿@model Rent
 
 <form method="post">
+    <input asp-for="AracId" hidden />
     <div class="border p-3 mt-5">
         <div class="row pb-3">
-            <h2 class "text-primary">Kiralama Kaydı Güncelle</h2>
+            <h2 class "text-primary">Rezarvasyon Güncelle</h2>
             </hr>
         </div>
-        <div class="text text-danger" asp-validation-summary="ModelOnly"></div>
-
-        <div class="mb-3">
-            <label asp-for="UserId" class="p-0"></label>
-            <input asp-for="UserId" class="form-control" disabled />
-
+		<div class="mb-3">
+			<Label asp-for="UserId" class="p-0"></Label>
+            <input asp-for="UserId" class="form-control" />
             <span asp-validation-for="UserId" class="text-danger"></span>
-
-        </div>
-
-
+		</div>
         <div class="mb-3">
-            <label asp-for="AracId" class="p-0"></label>
-            <input asp-for="AracId" class="form-control" disabled />
-
+            <Label asp-for="AracId" class="p-0"></Label>
+            <input asp-for="AracId" class="form-control" />
             <span asp-validation-for="AracId" class="text-danger"></span>
-
         </div>
 
+       
+
         <div class="mb-3">
-            <label asp-for="CreatedDate" class="p-0"></label>
+            <Label asp-for="CreatedDate" class="p-0"></Label>
             <input asp-for="CreatedDate" class="form-control" />
-
+            <span asp-validation-for="CreatedDate" class="text-danger"></span>
         </div>
+
         <div class="mb-3">
-            <label asp-for="EndDate" class="p-0"></label>
+            <Label asp-for="EndDate" class="p-0"></Label>
             <input asp-for="EndDate" class="form-control" />
-
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <Label asp-for="Carplate" class="p-0"></Label>
+            <input asp-for="Carplate" class="form-control" />
+            <span asp-validation-for="Carplate" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
-            <label asp-for="Carplate" class="p-0"></label>
-            <input asp-for="Carplate" class="form-control" disabled />
-
-        </div>
-        <div class="mb-3">
-            <label asp-for="Destination" class="p-0"></label>
+            <Label asp-for="Destination" class="p-0"></Label>
             <input asp-for="Destination" class="form-control" />
-
+            <span asp-validation-for="Destination" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="Durum" class="p-0"></label>
+            <Label asp-for="Durum" class="p-0"></Label>
             <input asp-for="Durum" class="form-control" />
-
+            <span asp-validation-for="Durum" class="text-danger"></span>
         </div>
-
-
-
-
-
-        <button type="submit" class="btn btn-lg btn-primary" style="width:250px">Kiralama Kaydı Güncelle</button>
+        <button type="submit" class="btn btn-lg btn-primary" style="width:250px">Rezervasyon Güncelle</button>
         <a asp-controller="Rent" asp-action="Index" class-"btn btn-Ig btn-primary" style="width:250px">
-            Kiralama Listesine Geri Dön
+            Rezarvasyona Geri Dön
         </a>
     </div>
 </form>

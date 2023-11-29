@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AracFilo.Controllers
 {
-	//[Authorize(Roles = UserRoles.Role_Admin)]
+	
 	public class CarController : Controller
 	{
 		private readonly UygulamaDbContext _db;
@@ -16,32 +16,40 @@ namespace AracFilo.Controllers
 			_db = db;
 		}
 		[HttpGet]
-		public IActionResult CarAdd()
+        [Authorize(Roles = UserRoles.Role_Admin)]
+        public IActionResult CarAdd()
 		{
 
 			return View();
 		}
 		[HttpPost]
-		public IActionResult CarAdd(Arac arac)
+        [Authorize(Roles = UserRoles.Role_Admin)]
+        public IActionResult CarAdd(Arac arac)
 		{
 			if (arac.AracName == null || arac.Plaka == null || arac.Ozellik == null)
 			{
+				
 				ModelState.AddModelError(string.Empty, "Boş geçilemez");
 				return View(arac);
 			}
-			_db.Araclar.Add(arac);
+            
+            _db.Araclar.Add(arac);
 			_db.SaveChanges();
-			return RedirectToAction("Index");
+			return RedirectToAction("Index","Car");
 		}
+
 		[HttpGet]
-		public IActionResult Index()
+        [Authorize(Roles = "Admin,User")]
+        public IActionResult Index()
 		{
 			var cars = _db.Araclar.ToList();
+			
 
 			return View(cars);
 		}
 		[HttpGet]
-		public IActionResult Sil(int id)
+        [Authorize(Roles = UserRoles.Role_Admin)]
+        public IActionResult Sil(int id)
 		{
 			var arac = _db.Araclar.Find(id);
 
@@ -56,7 +64,8 @@ namespace AracFilo.Controllers
 
 
 		[HttpPost,ActionName("Sil")]
-		public IActionResult SilPost(int id)
+        [Authorize(Roles = UserRoles.Role_Admin)]
+        public IActionResult SilPost(int id)
 		{
 			var arac = _db.Araclar.Find(id);
 
@@ -71,7 +80,8 @@ namespace AracFilo.Controllers
 			return RedirectToAction("Index");
 		}
 		[HttpGet]
-		public IActionResult Guncelle(int? id)
+        [Authorize(Roles = UserRoles.Role_Admin)]
+        public IActionResult Guncelle(int? id)
 
 		{
 			var arac = _db.Araclar.Find(id);
@@ -83,20 +93,25 @@ namespace AracFilo.Controllers
 			return View(arac);
 		}
 		[HttpPost]
-		public IActionResult Guncelle(Arac arac)
-		{
-			if (arac.AracName == null || arac.Plaka == null || arac.Ozellik == null)
+        [Authorize(Roles = UserRoles.Role_Admin)]
+        public IActionResult Guncelle(Arac arac)
+        {
+
+            
+            if (arac.AracName == null || arac.Plaka == null || arac.Ozellik == null)
 			{
-				ModelState.AddModelError(string.Empty, "Boş geçilemez");
+               
+                ModelState.AddModelError(string.Empty, "Boş geçilemez");
 				return View(arac);
 			}
-			if (ModelState.IsValid) {
-				_db.Araclar.Update(arac);
+            
+           
+                
+                _db.Araclar.Update(arac);
 				_db.SaveChanges();
 
 				return RedirectToAction("Index", "Car");
-			}
-			return View();
+			
 
 
 		}

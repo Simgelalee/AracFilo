@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AracFilo.Migrations
 {
     /// <inheritdoc />
-    public partial class dEEdfdf : Migration
+    public partial class Init3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace AracFilo.Migrations
                 name: "Araclar",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    AracId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AracName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Plaka = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -25,7 +25,7 @@ namespace AracFilo.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Araclar", x => x.Id);
+                    table.PrimaryKey("PK_Araclar", x => x.AracId);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,24 +71,24 @@ namespace AracFilo.Migrations
                 name: "Rents",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    RentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Carplate = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Destination = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Durum = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AracId = table.Column<int>(type: "int", nullable: false)
+                    AracId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rents", x => x.Id);
+                    table.PrimaryKey("PK_Rents", x => x.RentId);
                     table.ForeignKey(
                         name: "FK_Rents_Araclar_AracId",
                         column: x => x.AracId,
                         principalTable: "Araclar",
-                        principalColumn: "Id",
+                        principalColumn: "AracId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -198,29 +198,6 @@ namespace AracFilo.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Mahmut",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IdentyId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    rentsId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Mahmut", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_Mahmut_Rents_rentsId",
-                        column: x => x.rentsId,
-                        principalTable: "Rents",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -261,11 +238,6 @@ namespace AracFilo.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Mahmut_rentsId",
-                table: "Mahmut",
-                column: "rentsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Rents_AracId",
                 table: "Rents",
                 column: "AracId");
@@ -290,16 +262,13 @@ namespace AracFilo.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Mahmut");
+                name: "Rents");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Rents");
 
             migrationBuilder.DropTable(
                 name: "Araclar");

@@ -6,7 +6,6 @@ namespace AracFilo.Models
 	{
 		[Key]
 		public int AracId { get; set; }
-		
 		public string AracName { get; set; }
 
         public string Plaka { get; set; }
@@ -16,13 +15,13 @@ namespace AracFilo.Models
 
        public string Vito { get; set; }
 
-		public int UserId { get; set; }
-		public virtual User User { get; set; }
+		//public int UserId { get; set; }
+		//public virtual User User { get; set; }
 
 		public virtual List<Rent> Rents { get; set; }
 		
 
-
+		
 
 
 
